@@ -1,0 +1,32 @@
+services:
+  z-push:
+    image: kour1er/z-push
+    # volumes:
+    #   - ./zp_state:/var/lib/z-push
+    #   - ./zp_logs:/var/log/z-push
+    environment:
+      - BACKEND_PROVIDER=BackendIMAP
+      - IMAP_FOLDER_ARCHIVE='Archive'
+      - IMAP_FOLDER_DRAFTS='Drafts'
+      - IMAP_FOLDER_INBOX='Inbox'
+      - IMAP_FOLDER_SENT='Sent'
+      - IMAP_FOLDER_SPAM='Spam'
+      - IMAP_FOLDER_TRASH='Trash'
+      - IMAP_PORT=993
+      - IMAP_SERVER_METHOD=smtp
+      - IMAP_SERVER=example.com
+      - LOGAUTHFAIL=true
+      - LOGLEVEL=WARN
+      - PING_HIGHER_BOUND_LIFETIME=300
+      - PING_INTERVAL=10
+      - SMTP_PORT=587
+      - TIMEZONE='Europe/London'
+      - ZPUSH_HOST=zpush.example.com
+
+      # Log Levels: OFF/FATAL/ERROR/WARN/INFO/DEBUG/WBXML/DEVICEID/WBXMLSTACK
+    ports:
+      - 7003:8080
+
+# volumes:
+#     zp_state:
+#     zp_logs:
