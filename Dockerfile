@@ -1,6 +1,7 @@
 ARG ALPINE_VERSION=3.19.4
 FROM alpine:${ALPINE_VERSION}
-ARG ZPUSH_URL=https://github.com/Z-Hub/Z-Push/archive/refs/tags/2.7.4.tar.gz
+ENV ZPUSH_VERSION=2.7.5
+ENV ZPUSH_URL=https://github.com/Z-Hub/Z-Push/archive/refs/tags/${ZPUSH_VERSION}.tar.gz
 ENV PHP_VERSION=81
 ENV PHP_INI_DIR=/etc/php${PHP_VERSION}
 WORKDIR /usr/share/z-push
@@ -22,7 +23,7 @@ ENV PING_HIGHER_BOUND_LIFETIME=300
 ENV PING_INTERVAL=30
 ENV SMTP_PORT=587
 ENV TIMEZONE='Europe/London'
-ENV ZPUSH_HOST=push.example.com
+ENV ZPUSH_HOST=zpush.example.com
 
 
 # ------------------------
@@ -54,8 +55,8 @@ RUN apk update && apk add --no-cache \
 # ----------------------------------------
 # --- Create three key directories -------
 # --- /usr/share/z-push: the libraries ---
-# --- /var/lib/z-push: log files ---------
-# --- /var/log/z-push: state -------------
+# --- /var/log/z-push: log files ---------
+# --- /var/lib/z-push: state -------------
 # ----------------------------------------
 RUN mkdir -p /usr/share/z-push /var/lib/z-push /var/log/z-push && \
     chmod -R 770 /usr/share/z-push /var/lib/z-push /var/log/z-push

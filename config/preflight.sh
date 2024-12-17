@@ -27,7 +27,7 @@ sed -i \
     -e "s|('IMAP_FOLDER_ARCHIVE', 'ARCHIVE')|('IMAP_FOLDER_ARCHIVE', ${IMAP_FOLDER_ARCHIVE})|" \
     -e "s|('IMAP_SERVER', 'localhost')|('IMAP_SERVER', '${IMAP_SERVER}')|" \
     -e "s|('IMAP_PORT', 143)|('IMAP_PORT', ${IMAP_PORT})|" \
-    -e "s|('IMAP_OPTIONS', '/notls/norsh')|('IMAP_OPTIONS', '/ssl')|" \
+    -e "s|('IMAP_OPTIONS', '/notls/norsh')|('IMAP_OPTIONS', '/ssl/norsh')|" \
     -e "s|('IMAP_FOLDER_CONFIGURED', false)|('IMAP_FOLDER_CONFIGURED', true)|" \
     -e "s|('IMAP_SMTP_METHOD', 'mail')|('IMAP_SMTP_METHOD', 'smtp')|" \
     -e "s|imap_smtp_params = array()|imap_smtp_params = array('host'=>'tcp://${IMAP_SERVER}','port'=>${SMTP_PORT},'auth'=>true,'username'=>'imap_username','password'=>'imap_password')|" \
