@@ -1,13 +1,17 @@
 ARG ALPINE_VERSION=3.19.4
 FROM alpine:${ALPINE_VERSION}
+
 ENV ZPUSH_VERSION=2.7.5
 ENV ZPUSH_URL=https://github.com/Z-Hub/Z-Push/archive/refs/tags/${ZPUSH_VERSION}.tar.gz
+
 ENV PHP_VERSION=81
 ENV PHP_INI_DIR=/etc/php${PHP_VERSION}
+
 WORKDIR /usr/share/z-push
 
 # Defaults
 ENV BACKEND_PROVIDER=BackendIMAP
+ENV FULLEMAIL=true
 ENV IMAP_FOLDER_ARCHIVE='ARCHIVE'
 ENV IMAP_FOLDER_DRAFTS='DRAFTS'
 ENV IMAP_FOLDER_INBOX='INBOX'
@@ -43,6 +47,7 @@ RUN apk update && apk add --no-cache \
     php81-imap \
     php81-intl \
     php81-mbstring \
+    php81-opcache \
     php81-openssl \
     php81-sysvsem \
     php81-sysvshm \
@@ -89,6 +94,7 @@ COPY config/* /tmp
 RUN mv /tmp/preflight.sh /usr/local/bin/ && \
     mv /tmp/z-push.conf /etc/nginx/http.d && \
     mv /tmp/fpm-zpush.conf /etc/php81/php-fpm.d/www.conf && \
+    mv /tmp/opcache.ini /etc/php${PHP_VERSION}/conf.d/00_opcache.ini && \
     mkdir /usr/share/z-push/www && \
     mv /tmp/homepage.html /usr/share/z-push/www/index.html && \
     mv /tmp/supervisord.conf /etc/supervisord.conf && \

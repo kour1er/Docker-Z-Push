@@ -1,11 +1,12 @@
 services:
   z-push:
     image: kour1er/z-push
-    # volumes:
-    #   - ./zp_state:/var/lib/z-push
-    #   - ./zp_logs:/var/log/z-push
+    volumes:
+      - ./zp_state:/var/lib/z-push
+      - ./zp_logs:/var/log/z-push
     environment:
       - BACKEND_PROVIDER=BackendIMAP
+      - FULLEMAIL=true
       - IMAP_FOLDER_ARCHIVE='Archive'
       - IMAP_FOLDER_DRAFTS='Drafts'
       - IMAP_FOLDER_INBOX='Inbox'

@@ -1,7 +1,7 @@
 # Docker-Z-Push
 A Docker container for Z-Push, tested against [Docker-Mailserver](https://github.com/docker-mailserver/docker-mailserver).
 
-If you are running Dovecot with auth_username_format = %Lu (i.e. login with full email address) you may experience credential issues on iOS. For more details on this, see [here](https://github.com/Z-Hub/Z-Push/issues/127). As a workaround, you could set auth_default_realm in Dovecot to your domain to resolve this.
+If you are running Dovecot with auth_username_format = %Lu (i.e. login with full email address) you may experience credential issues on ios. For more details on this, see [here](https://github.com/Z-Hub/Z-Push/issues/127). As a workaround, you could set auth_default_realm to your domain to resolve this. Restarting your iOS device may also help.
 
 If you want to run behind a reverse proxy, something along these lines will probably help:
 

@@ -9,7 +9,7 @@ MAIN_CONFIG_FILE="./config.php"
 sed -i \
     -e "s|('TIMEZONE', '')|('TIMEZONE', ${TIMEZONE})|" \
     -e "s|('BACKEND_PROVIDER', '')|('BACKEND_PROVIDER', '${BACKEND_PROVIDER}')|" \
-    -e "s|('USE_FULLEMAIL_FOR_LOGIN), false)|('USE_FULLEMAIL_FOR_LOGIN', true)|" \
+    -e "s|('USE_FULLEMAIL_FOR_LOGIN', true)|('USE_FULLEMAIL_FOR_LOGIN', ${FULLEMAIL})|" \
     -e "s|('PING_INTERVAL', 30)|('PING_INTERVAL', ${PING_INTERVAL})|" \
     -e "s|('LOGLEVEL', LOGLEVEL_INFO)|('LOGLEVEL', LOGLEVEL_${LOGLEVEL})|" \
     -e "s|('LOGAUTHFAIL', false)|('LOGAUTHFAIL', ${LOGAUTHFAIL})|" \
@@ -38,7 +38,7 @@ AUTODISCOVER_CONFIG_FILE="./autodiscover/config.php"
 sed -i \
     -e "s|// define('ZPUSH_HOST', 'zpush.example.com')|define('ZPUSH_HOST', '${ZPUSH_HOST}')|" \
     -e "s|('TIMEZONE', '')|('TIMEZONE', ${TIMEZONE})|" \
-    -e "s|('USE_FULLEMAIL_FOR_LOGIN', false)|('USE_FULLEMAIL_FOR_LOGIN', true)|" \
+    -e "s|('USE_FULLEMAIL_FOR_LOGIN', false)|('USE_FULLEMAIL_FOR_LOGIN', ${FULLEMAIL})|" \
     -e "s|('LOGLEVEL', LOGLEVEL_INFO)|('LOGLEVEL', LOGLEVEL_${LOGLEVEL})|" \
     -e "s|('BACKEND_PROVIDER', '')|('BACKEND_PROVIDER', '${BACKEND_PROVIDER}')|" \
     "$AUTODISCOVER_CONFIG_FILE"
