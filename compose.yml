@@ -28,6 +28,6 @@ services:
     ports:
       - 7003:8080
 
-# volumes:
-#     zp_state:
-#     zp_logs:
+volumes:
+  zp_state:
+  zp_logs:
