@@ -1,9 +1,9 @@
 services:
   z-push:
     image: kour1er/z-push
+    container_name: z-push
     volumes:
       - ./zp_state:/var/lib/z-push
-      - ./zp_logs:/var/log/z-push
     environment:
       - BACKEND_PROVIDER=BackendIMAP
       - FULLEMAIL=true
@@ -11,18 +11,24 @@ services:
       - IMAP_FOLDER_DRAFTS='Drafts'
       - IMAP_FOLDER_INBOX='Inbox'
       - IMAP_FOLDER_SENT='Sent'
-      - IMAP_FOLDER_SPAM='Spam'
+      - IMAP_FOLDER_SPAM='Junk'
       - IMAP_FOLDER_TRASH='Trash'
       - IMAP_PORT=993
       - IMAP_SERVER_METHOD=smtp
       - IMAP_SERVER=example.com
+      - LDAP_DOMAIN=dc=example,dc=com
+      - LDAP_ENABLED=false
+      - LDAP_PASSWORD=password
+      - LDAP_SERVER=127.0.0.1:3890
+      - LDAP_USER=someusername
       - LOGAUTHFAIL=true
       - LOGLEVEL=WARN
+      - PHP_MEMORY=256
       - PING_HIGHER_BOUND_LIFETIME=300
       - PING_INTERVAL=10
       - SMTP_PORT=587
       - TIMEZONE='Europe/London'
-      - ZPUSH_HOST=zpush.example.com
+      - ZPUSH_HOST=mail.example.com
 
       # Log Levels: OFF/FATAL/ERROR/WARN/INFO/DEBUG/WBXML/DEVICEID/WBXMLSTACK
     ports:
@@ -30,4 +36,3 @@ services:
 
 volumes:
   zp_state:
-  zp_logs:

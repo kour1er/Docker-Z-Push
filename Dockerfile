@@ -46,6 +46,7 @@ RUN apk update && apk add --no-cache \
     php81-fpm \
     php81-imap \
     php81-intl \
+    php81-ldap \
     php81-mbstring \
     php81-opcache \
     php81-openssl \
@@ -80,7 +81,7 @@ RUN wget -q -O /tmp/zpush.tar.gz ${ZPUSH_URL} && \
     cp /tmp/z-push/config/nginx/z-push-autodiscover.conf /etc/nginx/snippets/ && \
     cp -r /tmp/z-push/src/* /usr/share/z-push
 
-# Link the Z-Push admin tools
+# Link the Z-Push admin tools and logs
 RUN ln -s /usr/bin/php${PHP_VERSION} /usr/sbin/php && \
     ln -s /usr/share/z-push/z-push-admin.php /usr/local/bin/z-push-admin && \
     ln -s /usr/share/z-push/z-push-top.php /usr/local/bin/z-push-top
@@ -101,14 +102,22 @@ RUN mv /tmp/preflight.sh /usr/local/bin/ && \
     chmod 550 /usr/local/bin/preflight.sh && \
     mkdir -p /run/php${PHP_VERSION}
 
+# Remove test for logging path because of routing to php://stdout
+ENV LOG_PATCH="/usr/share/z-push/lib/core/zpush.php"
+RUN sed -i \
+    -e "s|if ((!file_exists(LOGFILE) && !touch(LOGFILE)) \|\| !is_writable(LOGFILE))||" \
+    -e "s|throw new FatalMisconfigurationException(\"The configured LOGFILE can not be modified.\");||" \
+    -e "s|if ((!file_exists(LOGERRORFILE) && !touch(LOGERRORFILE)) \|\| !is_writable(LOGERRORFILE))||" \
+    -e "s|throw new FatalMisconfigurationException(\"The configured LOGERRORFILE can not be modified.\");||" \
+    ${LOG_PATCH}
+
 # -----------------------------------------------
 # --- Finishing ---------------------------------
 # -----------------------------------------------
 # Set permissions
 RUN chown -R nginx:nginx \
-    /etc/nginx/http.d \
-    /etc/nginx/snippets \
-    /etc/nginx/nginx.conf \
+    /etc/nginx/ \
+    /etc/php${PHP_VERSION} \
     /run \
     /usr/share/z-push \
     /var/lib/z-push \
