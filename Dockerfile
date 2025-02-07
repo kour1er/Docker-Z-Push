@@ -103,14 +103,21 @@ RUN mv /tmp/preflight.sh /usr/local/bin/ && \
     mkdir -p /run/php${PHP_VERSION}
 
 # Remove test for logging path because of routing to php://stdout
-ENV LOG_PATCH="/usr/share/z-push/lib/core/zpush.php"
+ENV LOG_PATCH_Z_PUSH="/usr/share/z-push/lib/core/zpush.php"
 RUN sed -i \
     -e "s|if ((!file_exists(LOGFILE) && !touch(LOGFILE)) \|\| !is_writable(LOGFILE))||" \
     -e "s|throw new FatalMisconfigurationException(\"The configured LOGFILE can not be modified.\");||" \
     -e "s|if ((!file_exists(LOGERRORFILE) && !touch(LOGERRORFILE)) \|\| !is_writable(LOGERRORFILE))||" \
     -e "s|throw new FatalMisconfigurationException(\"The configured LOGERRORFILE can not be modified.\");||" \
-    ${LOG_PATCH}
-
+    ${LOG_PATCH_Z_PUSH}
+# The autodiscover equivalent
+ENV LOG_PATCH_AUTODISCOVER="/usr/share/z-push/autodiscover/autodiscover.php"
+RUN sed -i \
+    -e "s|if ((!file_exists(LOGFILE) && !touch(LOGFILE)) \|\| !is_writable(LOGFILE))||" \
+    -e "s|throw new FatalMisconfigurationException(\"The configured LOGFILE can not be modified.\");||" \
+    -e "s|if ((!file_exists(LOGERRORFILE) && !touch(LOGERRORFILE)) \|\| !is_writable(LOGERRORFILE))||" \
+    -e "s|throw new FatalMisconfigurationException(\"The configured LOGERRORFILE can not be modified.\");||" \
+    ${LOG_PATCH_AUTODISCOVER}
 # -----------------------------------------------
 # --- Finishing ---------------------------------
 # -----------------------------------------------
