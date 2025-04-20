@@ -1,6 +1,5 @@
 ARG ALPINE_VERSION=3.19.4
 FROM alpine:${ALPINE_VERSION}
-ENV TZ=UTC
 
 ENV ZPUSH_VERSION=2.7.5
 ENV ZPUSH_URL=https://github.com/Z-Hub/Z-Push/archive/refs/tags/${ZPUSH_VERSION}.tar.gz
@@ -57,7 +56,8 @@ RUN apk update && apk add --no-cache \
     php81-pdo \
     php81-posix \
     php81-soap \
-    php81-simplexml
+    php81-simplexml \
+    tzdata
 
 # ----------------------------------------
 # --- Create three key directories -------
