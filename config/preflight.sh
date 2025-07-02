@@ -13,7 +13,9 @@ sed -i \
     -e "s|('PING_INTERVAL', 30)|('PING_INTERVAL', ${PING_INTERVAL})|" \
     -e "s|('LOGLEVEL', LOGLEVEL_INFO)|('LOGLEVEL', LOGLEVEL_${LOGLEVEL})|" \
     -e "s|('LOGAUTHFAIL', false)|('LOGAUTHFAIL', ${LOGAUTHFAIL})|" \
+    -e "s|('PING_LOWER_BOUND_LIFETIME', false)|('PING_LOWER_BOUND_LIFETIME', ${PING_LOWER_BOUND_LIFETIME})|" \
     -e "s|('PING_HIGHER_BOUND_LIFETIME', false)|('PING_HIGHER_BOUND_LIFETIME', ${PING_HIGHER_BOUND_LIFETIME})|" \
+    -e "s|('RETRY_AFTER_DELAY', 300)|('RETRY_AFTER_DELAY', ${RETRY_AFTER_DELAY})|" \
     -e "s|('LOGFILE', LOGFILEDIR . 'z-push.log')|('LOGFILE', 'php://stdout')|" \
     -e "s|('LOGERRORFILE', LOGFILEDIR . 'z-push-error.log')|('LOGERRORFILE', 'php://stdout')|" \
     "$MAIN_CONFIG_FILE"
@@ -67,8 +69,12 @@ sed -i \
 # Update z-push config file
 sed -i "s|server_name localhost|server_name autodiscover.${IMAP_SERVER}|" /etc/nginx/http.d/z-push.conf
 
-# Increase PHP base memory
-sed -i "s|memory_limit = 128M|memory_limit = ${PHP_MEMORY}M|" /etc/php${PHP_VERSION}/php.ini
+# Update php.ini
+PHP_INI_FILE="/etc/php${PHP_VERSION}/php.ini"
+sed -i \
+    -e "s|memory_limit = 128M|memory_limit = ${PHP_MEMORY}M|" \
+    -e "s|max_execution_time = 30|max_execution_time = ${PHP_MAX_EXECUTION_TIME}|" \
+    "$PHP_INI_FILE"
 
 # State check
 required_files=(

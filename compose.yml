@@ -23,12 +23,16 @@ services:
       - LDAP_USER=someusername
       - LOGAUTHFAIL=true
       - LOGLEVEL=WARN
+      - PHP_MAX_EXECUTION_TIME=3660
       - PHP_MEMORY=256
       - PING_HIGHER_BOUND_LIFETIME=300
-      - PING_INTERVAL=10
+      - PING_INTERVAL=30
+      - PING_LOWER_BOUND_LIFETIME=false
+      - RETRY_AFTER_DELAY=300
       - SMTP_PORT=587
       - TIMEZONE='Europe/London'
-      - ZPUSH_HOST=mail.example.com
+      - TZ=Europe/London
+      - ZPUSH_HOST=zpush.example.com
 
       # Log Levels: OFF/FATAL/ERROR/WARN/INFO/DEBUG/WBXML/DEVICEID/WBXMLSTACK
     ports:

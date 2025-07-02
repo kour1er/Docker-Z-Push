@@ -23,8 +23,12 @@ ENV IMAP_SERVER_METHOD=smtp
 ENV IMAP_SERVER=example.com
 ENV LOGAUTHFAIL=false
 ENV LOGLEVEL=WARN
+ENV PHP_MAX_EXECUTION_TIME=3660
+ENV PHP_MEMORY=256
 ENV PING_HIGHER_BOUND_LIFETIME=300
 ENV PING_INTERVAL=30
+ENV PING_LOWER_BOUND_LIFETIME=false
+ENV RETRY_AFTER_DELAY=300
 ENV SMTP_PORT=587
 ENV TIMEZONE='Europe/London'
 ENV ZPUSH_HOST=zpush.example.com
@@ -44,6 +48,7 @@ RUN apk update && apk add --no-cache \
     php81-cli \
     php81-curl \
     php81-fpm \
+    php81-iconv \
     php81-imap \
     php81-intl \
     php81-ldap \
